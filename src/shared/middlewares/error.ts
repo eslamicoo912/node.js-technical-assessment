@@ -20,10 +20,10 @@ export const globalErrorHandler: ErrorRequestHandler = (
   }
 
   // catch mongoose duplicate key errors
-  if ((err as any).code === 11000) {
+  if ((err as unknown as { code: number }).code === 11000) {
     statusCode = 400;
     status = "fail";
-    const duplicateField = Object.keys((err as any).keyValue)[0];
+    const duplicateField = Object.keys((err as unknown as { keyValue: Record<string, string> }).keyValue)[0];
     message = `The ${duplicateField} is already registered. Please try another one.`;
   }
 
