@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { ProjectService } from './project.service';
 import { catchAsync } from '../../shared/utils/catch-async';
+import { QueryFeatures } from '../../shared/utils/query-features';
 
 export class ProjectController {
     private projectService: ProjectService;
@@ -17,7 +18,11 @@ export class ProjectController {
 
     getAll = catchAsync(async (req: Request, res: Response): Promise<void> => {
         const userId = req.user!.userId;
-        const projects = await this.projectService.getAllProjects(userId);
+
+        // pagination and sorting
+        const options = QueryFeatures.parse(req.query as Record<string, string>, 'createdAt');
+
+        const projects = await this.projectService.getAllProjects(userId, options);
         res.status(200).json({ status: 'success', count: projects.length, data: projects });
     });
 

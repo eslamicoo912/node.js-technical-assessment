@@ -3,6 +3,7 @@ import { ProjectRepository } from '../project/project.repository';
 import { ITask, ICreateTaskInput, IUpdateTaskInput, ITaskFilters } from './task.interfaces';
 import { AppError } from '../../shared/utils/app-error';
 import { Types } from 'mongoose';
+import { IPaginationOptions } from '../../shared/interfaces/query';
 
 export class TaskService {
   private taskRepository: TaskRepository;
@@ -30,13 +31,13 @@ export class TaskService {
     });
   }
 
-  async getTasks(userId: string, projectId: string, filters: ITaskFilters): Promise<ITask[]> {
+  async getTasks(userId: string, projectId: string, filters: ITaskFilters, options: IPaginationOptions): Promise<ITask[]> {
     const project = await this.projectRepository.findByIdAndUser(projectId, userId);
     if (!project) {
       throw new AppError('Project not found or you do not have permission to view its tasks', 404);
     }
 
-    return await this.taskRepository.findAll(projectId, filters);
+    return await this.taskRepository.findAll(projectId, filters, options);
   }
 
   async getTaskById(userId: string, id: string): Promise<ITask> {
