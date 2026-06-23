@@ -31,3 +31,11 @@ export interface ITaskFilters {
   status?: 'Pending' | 'In Progress' | 'Done';
   priority?: 'Low' | 'Medium' | 'High';
 }
+
+export interface ITaskUpdatePayload {
+  title?: string;
+  description?: string;
+  status?: 'Pending' | 'In Progress' | 'Done';
+  priority?: 'Low' | 'Medium' | 'High';
+  dueDate?: string;
+}

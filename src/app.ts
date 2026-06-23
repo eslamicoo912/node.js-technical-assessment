@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from "express";
 import authRoutes from "./modules/auth/auth.routes";
 import projectRoutes from "./modules/project/project.routes";
+import taskRoutes from "./modules/task/task.routes";
 import { globalErrorHandler } from "./shared/middlewares/error";
 
 const app: Application = express();
@@ -16,6 +17,7 @@ app.get("/", (req: Request, res: Response) => {
 // --- Routes ---
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/projects", projectRoutes);
+app.use("/api/v1", taskRoutes);
 
 // -- Global Error Handler ---
 app.use(globalErrorHandler);
