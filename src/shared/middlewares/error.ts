@@ -1,10 +1,11 @@
-import { Request, Response, ErrorRequestHandler } from "express";
+import { Request, Response, NextFunction, ErrorRequestHandler } from "express";
 import { AppError } from "../utils/app-error";
 
 export const globalErrorHandler: ErrorRequestHandler = (
   err: Error | AppError,
   _req: Request,
   res: Response,
+  _next: NextFunction, // eslint-disable-line @typescript-eslint/no-unused-vars
 ): void => {
   let statusCode = 500;
   let status = "error";
