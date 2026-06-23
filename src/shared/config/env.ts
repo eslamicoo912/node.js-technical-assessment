@@ -10,10 +10,6 @@ const requireString = (key: string): string => {
   return value.trim();
 };
 
-const optionalString = (key: string, fallback: string): string => {
-  return process.env[key]?.trim() || fallback;
-};
-
 const requireNumber = (key: string, fallback: number): number => {
   const value = process.env[key];
   if (!value) return fallback;

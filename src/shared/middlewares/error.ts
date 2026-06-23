@@ -1,11 +1,10 @@
-import { Request, Response, NextFunction, ErrorRequestHandler } from "express";
+import { Request, Response, ErrorRequestHandler } from "express";
 import { AppError } from "../utils/app-error";
 
 export const globalErrorHandler: ErrorRequestHandler = (
   err: Error | AppError,
   _req: Request,
   res: Response,
-  next: NextFunction,
 ): void => {
   let statusCode = 500;
   let status = "error";
@@ -20,10 +19,10 @@ export const globalErrorHandler: ErrorRequestHandler = (
   }
 
   // catch mongoose duplicate key errors
-  if ((err as any).code === 11000) {
+  if ((err as unknown as { code: number }).code === 11000) {
     statusCode = 400;
     status = "fail";
-    const duplicateField = Object.keys((err as any).keyValue)[0];
+    const duplicateField = Object.keys((err as unknown as { keyValue: Record<string, string> }).keyValue)[0];
     message = `The ${duplicateField} is already registered. Please try another one.`;
   }
 
