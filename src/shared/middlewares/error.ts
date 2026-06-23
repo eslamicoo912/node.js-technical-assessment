@@ -5,7 +5,7 @@ export const globalErrorHandler: ErrorRequestHandler = (
   err: Error | AppError,
   _req: Request,
   res: Response,
-  next: NextFunction,
+  _next: NextFunction, // eslint-disable-line @typescript-eslint/no-unused-vars
 ): void => {
   let statusCode = 500;
   let status = "error";

@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { verifyToken } from "../utils/jwt";
 import { AppError } from "../utils/app-error";
 
-export const protect = async (
+export const authenticate = async (
   req: Request,
   _res: Response,
   next: NextFunction,
