@@ -1,4 +1,5 @@
 import { TaskModel } from '../../database/models/task.model';
+import { IPaginationOptions } from '../../shared/interfaces/query';
 import { ITask, ITaskFilters } from './task.interfaces';
 
 export class TaskRepository {
@@ -7,7 +8,7 @@ export class TaskRepository {
     return await newTask.save();
   }
 
-  async findAll(projectId: string, filters: ITaskFilters): Promise<ITask[]> {
+  async findAll(projectId: string, filters: ITaskFilters, options: IPaginationOptions): Promise<ITask[]> {
     const query: Record<string, string> = { projectId };
 
     if (filters.status) {
@@ -17,7 +18,19 @@ export class TaskRepository {
       query.priority = filters.priority;
     }
 
-    return await TaskModel.find(query).exec();
+    const page = options.page || 1;
+    const limit = options.limit || 10;
+
+    const skip = (page - 1) * limit;
+
+    const sortBy = options.sortBy || 'createdAt';
+    const sortOrder = options.sortOrder === 'asc' ? 1 : -1;
+
+    return await TaskModel.find(query)
+      .sort({ [sortBy]: sortOrder })
+      .skip(skip)
+      .limit(limit)
+      .exec();
   }
 
   async findById(id: string): Promise<ITask | null> {

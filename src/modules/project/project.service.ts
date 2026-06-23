@@ -2,6 +2,7 @@ import { ProjectRepository } from './project.repository';
 import { IProject, ICreateProjectInput, IUpdateProjectInput } from './project.interfaces';
 import { AppError } from '../../shared/utils/app-error';
 import { Types } from 'mongoose';
+import { IPaginationOptions } from '../../shared/interfaces/query';
 
 export class ProjectService {
   private projectRepository: ProjectRepository;
@@ -19,8 +20,8 @@ export class ProjectService {
     });
   }
 
-  async getAllProjects(userId: string): Promise<IProject[]> {
-    return await this.projectRepository.findAllByUserId(userId);
+  async getAllProjects(userId: string, options: IPaginationOptions): Promise<IProject[]> {
+    return await this.projectRepository.findAllByUserId(userId, options);
   }
 
   async getProjectById(id: string, userId: string): Promise<IProject> {

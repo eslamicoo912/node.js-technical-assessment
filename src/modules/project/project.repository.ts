@@ -1,4 +1,5 @@
 import { ProjectModel } from '../../database/models/project.model';
+import { IPaginationOptions } from '../../shared/interfaces/query';
 import { IProject } from './project.interfaces';
 
 export class ProjectRepository {
@@ -7,8 +8,20 @@ export class ProjectRepository {
     return await newProject.save();
   }
 
-  async findAllByUserId(userId: string): Promise<IProject[]> {
-    return await ProjectModel.find({ userId }).exec();
+  async findAllByUserId(userId: string, options: IPaginationOptions): Promise<IProject[]> {
+    const page = options.page || 1;
+    const limit = options.limit || 10;
+
+    const skip = (page - 1) * limit;
+
+    const sortBy = options.sortBy || 'createdAt';
+    const sortOrder = options.sortOrder === 'asc' ? 1 : -1;
+
+    return await ProjectModel.find({ userId })
+      .sort({ [sortBy]: sortOrder })
+      .skip(skip)
+      .limit(limit)
+      .exec();
   }
 
   async findByIdAndUser(id: string, userId: string): Promise<IProject | null> {
