@@ -4,6 +4,7 @@ import { AppError } from '../../shared/utils/app-error';
 import { Types } from 'mongoose';
 import { IPaginationOptions } from '../../shared/interfaces/query';
 import { PROJECT_STATUS } from '../../shared/constants/projects';
+import { TaskModel } from '../../database/models/task.model';
 
 export class ProjectService {
   private projectRepository: ProjectRepository;
@@ -41,11 +42,15 @@ export class ProjectService {
     return updatedProject;
   }
 
-  async deleteProject(id: string, userId: string): Promise<IProject> {
-    const deletedProject = await this.projectRepository.delete(id, userId);
-    if (!deletedProject) {
+  async deleteProject(projectId: string, userId: string): Promise<void> {
+    const project = await this.projectRepository.findByIdAndUser(projectId, userId);
+    if (!project) {
       throw new AppError('Project not found or you do not have permission to delete it', 404);
     }
-    return deletedProject;
+
+    // cascade delete
+    await TaskModel.deleteMany({ projectId });
+
+    await this.projectRepository.delete(projectId, userId);
   }
 }
