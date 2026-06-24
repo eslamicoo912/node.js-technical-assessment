@@ -3,6 +3,7 @@ import { IProject, ICreateProjectInput, IUpdateProjectInput } from './project.in
 import { AppError } from '../../shared/utils/app-error';
 import { Types } from 'mongoose';
 import { IPaginationOptions } from '../../shared/interfaces/query';
+import { PROJECT_STATUS } from '../../shared/constants/projects';
 
 export class ProjectService {
   private projectRepository: ProjectRepository;
@@ -16,7 +17,7 @@ export class ProjectService {
       userId: new Types.ObjectId(userId),
       title: input.title,
       description: input.description,
-      status: input.status || 'Pending',
+      status: input.status || PROJECT_STATUS.PENDING,
     });
   }
 
@@ -40,10 +41,11 @@ export class ProjectService {
     return updatedProject;
   }
 
-  async deleteProject(id: string, userId: string): Promise<void> {
+  async deleteProject(id: string, userId: string): Promise<IProject> {
     const deletedProject = await this.projectRepository.delete(id, userId);
     if (!deletedProject) {
       throw new AppError('Project not found or you do not have permission to delete it', 404);
     }
+    return deletedProject;
   }
 }

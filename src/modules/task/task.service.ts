@@ -4,6 +4,7 @@ import { ITask, ICreateTaskInput, IUpdateTaskInput, ITaskFilters } from './task.
 import { AppError } from '../../shared/utils/app-error';
 import { Types } from 'mongoose';
 import { IPaginationOptions } from '../../shared/interfaces/query';
+import { TASKS_PRIORITY, TASKS_STATUS } from '../../shared/constants/tasks';
 
 export class TaskService {
   private taskRepository: TaskRepository;
@@ -25,8 +26,8 @@ export class TaskService {
       projectId: new Types.ObjectId(projectId),
       title: input.title,
       description: input.description,
-      status: input.status || 'Pending',
-      priority: input.priority || 'Medium',
+      status: input.status || TASKS_STATUS.PENDING,
+      priority: input.priority || TASKS_PRIORITY.MEDIUM,
       dueDate: new Date(input.dueDate),
     });
   }

@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import { UserModel } from '../../database/models/user.model';
 import { ProjectModel } from '../../database/models/project.model';
 import { TaskModel } from '../../database/models/task.model';
+import { USER_ROLES } from '../constants/user-roles';
 
 dotenv.config();
 
@@ -30,13 +31,13 @@ const seedDatabase = async (): Promise<void> => {
                 name: 'Eslam Ashraf',
                 email: 'eslam@example.com',
                 password: hashedPassword,
-                role: 'Admin',
+                role: USER_ROLES.ADMIN,
             },
             {
                 name: 'Ahmed Mohamed',
                 email: 'ahmed@example.com',
                 password: hashedPassword,
-                role: 'Member',
+                role: USER_ROLES.MEMBER,
             },
         ]);
 
