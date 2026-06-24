@@ -28,7 +28,7 @@ export class ProjectService {
   async getProjectById(id: string, userId: string): Promise<IProject> {
     const project = await this.projectRepository.findByIdAndUser(id, userId);
     if (!project) {
-      throw new AppError('Project not found or you do not have permission to access it', 404);
+      throw new AppError('You are not logged in. Please provide a token to gain access.', 404);
     }
     return project;
   }
