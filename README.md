@@ -22,6 +22,7 @@ When an HTTP request enters the system, it starts a well-defined pipeline. Here 
 6. **Service Layer**: This is where core business logic and business rules lives. The service coordinates domain logic, handles permissions, and manages cross-resource rules (e.g., checking if the requesting user owns the parent project before allowing them to create a task inside it). It does not query MongoDB directly; instead, it calls the repository layer.
 7. **Repository Layer**: This layer abstracts all direct database queries. The repository encapsulates the Mongoose model, separating the service layer from repository layer. This keeps our service layer decoupled and easily testable using mock objects.
 8. **MongoDB (Mongoose)**: The persistence layer where data is stored. Mongoose schemas are used to define documents, relationships, and model behavior.
+9. **Github Actions**: Continuous integration and continuous deployment. It is used to test the application and deploy it to the cloud. main.yml file is created at .github/workflows/main.yml for CI/CD.
 
 ### Request Flow Diagram
 
