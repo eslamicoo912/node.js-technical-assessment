@@ -8,7 +8,9 @@
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "seed": "ts-node src/shared/scripts/seed.ts"
+    "seed": "ts-node src/shared/scripts/seed.ts",
+    "test": "cross-env NODE_ENV=test jest --runInBand",
+    "test:watch": "cross-env NODE_ENV=test jest --watchAll"
   },
   "keywords": [],
   "author": "",
@@ -25,9 +27,15 @@
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",
     "@types/express": "^5.0.6",
+    "@types/jest": "^30.0.0",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^26.0.0",
+    "@types/supertest": "^7.2.0",
+    "cross-env": "^10.1.0",
     "eslint": "^10.5.0",
+    "jest": "^30.4.2",
+    "supertest": "^7.2.2",
+    "ts-jest": "^29.4.11",
     "ts-node-dev": "^2.0.0",
     "typescript": "5.9",
     "typescript-eslint": "^8.61.1"

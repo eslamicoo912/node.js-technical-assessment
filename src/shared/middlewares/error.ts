@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction, ErrorRequestHandler } from "express";
 import { AppError } from "../utils/app-error";
+import { ZodError } from "zod";
 
 export const globalErrorHandler: ErrorRequestHandler = (
   err: Error | AppError,
@@ -11,6 +12,13 @@ export const globalErrorHandler: ErrorRequestHandler = (
   let status = "error";
   let message = "server error";
   let errors: unknown = undefined;
+
+  // check if it's Zod error
+  if (err instanceof ZodError) {
+    statusCode = 400;
+    status = 'fail';
+    message = 'Validation input failed';
+  }
 
   // check if it's our custom AppError
   if (err instanceof AppError) {

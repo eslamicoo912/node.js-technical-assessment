@@ -67,12 +67,12 @@ export class TaskService {
       throw new AppError('Access denied to modify this task', 403);
     }
 
-    const updateData: any = { ...input };
+    const updateData: IUpdateTaskInput = { ...input };
     if (input.dueDate) {
-      updateData.dueDate = new Date(input.dueDate);
+      updateData.dueDate = new Date(input.dueDate) as unknown as string;
     }
 
-    const updatedTask = await this.taskRepository.update(id, updateData);
+    const updatedTask = await this.taskRepository.update(id, updateData as unknown as Date);
     if (!updatedTask) {
       throw new AppError('Failed to update task', 400);
     }

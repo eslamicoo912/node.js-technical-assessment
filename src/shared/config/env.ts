@@ -20,6 +20,7 @@ const requireNumber = (key: string, fallback: number): number => {
 };
 
 export const env = {
+  NODE_ENV: requireString("NODE_ENV"),
   PORT: requireNumber("PORT", 3000),
   JWT_SECRET: requireString("JWT_SECRET"),
   JWT_EXPIRES_IN: requireString("JWT_EXPIRES_IN"),
