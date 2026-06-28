@@ -2,6 +2,15 @@
 
 Project & Task Management System. This is a structured Node.js backend application built using TypeScript, Express, MongoDB (Mongoose), and Zod. It implements clean architecture to ensure modularity, type safety, and ease of testing.
 
+### Checklist for the tasks that are implemented:
+
+1. Authentication & Authorization
+2. Projects Module
+3. Tasks Module
+4. Pagination & sorting on list endpoints (Bonus)
+5. Role-based access control (Admin / Member) (Bonus)
+6. Unit tests using Jest and Supertest (Bonus)
+7. Use TypeScript (Bonus)
 ---
 
 ## 1. Architectural Overview
@@ -93,6 +102,8 @@ SALT_ROUNDS=10
 ## 3. Installation & Setup Steps
 
 Follow these steps to run the application locally:
+
+### Step 0: Make sure you have node.js and mongoDB installed locally.
 
 ### Step 1: Install Dependencies
 Install all required project dependencies using npm:
